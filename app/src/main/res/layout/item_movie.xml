@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/layoutMovie"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="180dp"
+        android:layout_height="250dp"
+        app:cardElevation="10dp"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivFilm"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="@color/redvel" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titanic"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tvRilis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1998"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

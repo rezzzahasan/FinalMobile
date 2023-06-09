@@ -1,4 +1,4 @@
-package com.example.h071211010_finalmobile;
+package com.example.h071211010_finalmobile.Fragment;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.h071211010_finalmobile.R;
 
 
 public class TvShowFragment extends Fragment {
