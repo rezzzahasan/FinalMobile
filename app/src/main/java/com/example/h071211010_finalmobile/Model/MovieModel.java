@@ -1,10 +1,15 @@
 package com.example.h071211010_finalmobile.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
-public class MovieModel {
+public class MovieModel implements Parcelable {
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("backdrop_path")
     private String backdrop_path;
     @SerializedName("original_title")
@@ -18,12 +23,23 @@ public class MovieModel {
     @SerializedName("vote_average")
     private String vote_average;
 
+    public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
+        @Override
+        public MovieModel createFromParcel(Parcel in) {
+            return new MovieModel(in);
+        }
 
-    public String getId() {
+        @Override
+        public MovieModel[] newArray(int size) {
+            return new MovieModel[size];
+        }
+    };
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,4 +91,41 @@ public class MovieModel {
         this.vote_average = vote_average;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public MovieModel(int id, String backdrop_path, String original_title, String overview, String poster_path, String release_date, String vote_average) {
+        this.id = id;
+        this.backdrop_path = backdrop_path;
+        this.original_title = original_title;
+        this.overview = overview;
+        this.poster_path = poster_path;
+        this.release_date = release_date;
+        this.vote_average = vote_average;
+    }
+
+
+    protected MovieModel(Parcel in) {
+        id = in.readInt();
+        backdrop_path = in.readString();
+        original_title = in.readString();
+        overview = in.readString();
+        poster_path = in.readString();
+        release_date = in.readString();
+        vote_average = in.readString();
+    }
+
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(backdrop_path);
+        dest.writeString(original_title);
+        dest.writeString(overview);
+        dest.writeString(poster_path);
+        dest.writeString(release_date);
+        dest.writeString(vote_average);
+    }
 }

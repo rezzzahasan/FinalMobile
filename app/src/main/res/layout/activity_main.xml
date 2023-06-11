@@ -11,12 +11,12 @@
         android:id="@+id/tvTittle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/redvel"
+        android:background="@color/purple"
         android:gravity="center_vertical"
-        android:padding="8dp"
+        android:padding="10dp"
         android:text="Movies"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,24 +32,24 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTittle" />
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="404dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginBottom="4dp"
             android:columnCount="3"
             android:padding="4dp"
             android:rowCount="1">
 
             <LinearLayout
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="62dp"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_columnWeight="1"
@@ -58,9 +58,9 @@
 
                 <ImageView
                     android:id="@+id/btnMovie"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/documentary" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/clapperboard" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
 
             <LinearLayout
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="62dp"
                 android:layout_row="0"
                 android:layout_column="1"
                 android:layout_columnWeight="1"
@@ -81,9 +81,9 @@
 
                 <ImageView
                     android:id="@+id/btnTvShow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:src="@drawable/tve" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/television" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="62dp"
                 android:layout_row="0"
                 android:layout_column="2"
                 android:layout_columnWeight="1"
@@ -103,9 +103,9 @@
 
                 <ImageView
                     android:id="@+id/btnFavorite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:src="@drawable/populer" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/reward" />
 
                 <TextView
                     android:layout_width="wrap_content"

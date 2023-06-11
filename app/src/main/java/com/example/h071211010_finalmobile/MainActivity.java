@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.h071211010_finalmobile.Fragment.FavoriteFragment;
 import com.example.h071211010_finalmobile.Fragment.MovieFragment;
@@ -15,13 +16,14 @@ import com.example.h071211010_finalmobile.Fragment.TvShowFragment;
 public class MainActivity extends AppCompatActivity {
     ImageView btnMovie, btnFavorite, btnTvShow;
     FragmentManager fragmentManager;
+    TextView tvTittle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        tvTittle = findViewById(R.id.tvTittle);
         btnMovie = findViewById(R.id.btnMovie);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnTvShow = findViewById(R.id.btnTvShow);
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         btnMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvTittle.setText("Movie");
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.frameContainer, new MovieFragment(), MovieFragment.class.getSimpleName())
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         btnTvShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvTittle.setText("TV Show");
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.frameContainer, new TvShowFragment(), TvShowFragment.class.getSimpleName())
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvTittle.setText("Favorites");
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.frameContainer, new FavoriteFragment(), FavoriteFragment.class.getSimpleName())
