@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btnMovie = findViewById(R.id.btnMovie);
         btnFavorite = findViewById(R.id.btnFavorite);
         btnTvShow = findViewById(R.id.btnTvShow);
+
         fragmentManager = getSupportFragmentManager();
 
         MovieFragment movieFragment = new MovieFragment();
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager
                     .beginTransaction()
                     .add(R.id.frameContainer, movieFragment, MovieFragment.class.getSimpleName())
+                    .addToBackStack(null)
                     .commit();
         }
 
@@ -46,9 +49,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tvTittle.setText("Movie");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                }, 200);
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.frameContainer, new MovieFragment(), MovieFragment.class.getSimpleName())
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -56,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tvTittle.setText("TV Show");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                }, 200);
+
                 fragmentManager
                         .beginTransaction()
                         .replace(R.id.frameContainer, new TvShowFragment(), TvShowFragment.class.getSimpleName())

@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.h071211010_finalmobile.Adapter.MovieAdapter;
 import com.example.h071211010_finalmobile.Connect.ApiService;
@@ -32,6 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieFragment extends Fragment {
     ProgressBar progressBar;
+    TextView tvAlert;
+    ImageView btnRefresh;
     private MovieAdapter movieAdapter;
     private RecyclerView rvMovie;
     public MovieFragment() {
@@ -41,15 +46,14 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false);
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_movie, container, false);
+
         progressBar = view.findViewById(R.id.progressBar);
+        tvAlert = view.findViewById(R.id.tvAlert);
+        btnRefresh = view.findViewById(R.id.btnRefresh);
         rvMovie = view.findViewById(R.id.rvMovie);
+        showLoading();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/movie/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -62,12 +66,16 @@ public class MovieFragment extends Fragment {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
+                        goneLoading();
                         List<MovieModel> movies = response.body().getData();
                         movieAdapter = new MovieAdapter((ArrayList<MovieModel>) movies);
                         rvMovie.setAdapter(movieAdapter);
                         progressBar.setVisibility(View.GONE);
                         int count = 2;
                         rvMovie.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(getContext(), count));
+                    } else {
+                        showAlert();
+                        Toast.makeText(getActivity(), "Failed to get data !", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -77,5 +85,26 @@ public class MovieFragment extends Fragment {
 
             }
         });
+        return view;
     }
+
+    private void showAlert() {
+        btnRefresh.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+        tvAlert.setVisibility(View.VISIBLE);
+        rvMovie.setVisibility(View.GONE);
+    }
+    private void goneLoading() {
+        btnRefresh.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        tvAlert.setVisibility(View.GONE);
+        rvMovie.setVisibility(View.VISIBLE);
+    }
+    private void showLoading() {
+        btnRefresh.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        tvAlert.setVisibility(View.GONE);
+        rvMovie.setVisibility(View.GONE);
+    }
+
 }

@@ -11,7 +11,7 @@ public class MovieModel implements Parcelable {
     @SerializedName("id")
     private int id;
     @SerializedName("backdrop_path")
-    private String backdrop_path;
+    private String backdropUrl;
     @SerializedName("original_title")
     private String original_title;
     @SerializedName("overview")
@@ -43,12 +43,12 @@ public class MovieModel implements Parcelable {
         this.id = id;
     }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
+    public String getBackdropUrl() {
+        return backdropUrl;
     }
 
     public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
+        this.backdropUrl = backdrop_path;
     }
 
     public String getOriginal_title() {
@@ -98,7 +98,7 @@ public class MovieModel implements Parcelable {
 
     public MovieModel(int id, String backdrop_path, String original_title, String overview, String poster_path, String release_date, String vote_average) {
         this.id = id;
-        this.backdrop_path = backdrop_path;
+        this.backdropUrl = backdrop_path;
         this.original_title = original_title;
         this.overview = overview;
         this.poster_path = poster_path;
@@ -109,7 +109,7 @@ public class MovieModel implements Parcelable {
 
     protected MovieModel(Parcel in) {
         id = in.readInt();
-        backdrop_path = in.readString();
+        backdropUrl= in.readString();
         original_title = in.readString();
         overview = in.readString();
         poster_path = in.readString();
@@ -121,7 +121,7 @@ public class MovieModel implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(backdrop_path);
+        dest.writeString(backdropUrl);
         dest.writeString(original_title);
         dest.writeString(overview);
         dest.writeString(poster_path);

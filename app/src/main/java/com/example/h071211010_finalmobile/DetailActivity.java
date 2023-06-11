@@ -18,7 +18,7 @@ import com.example.h071211010_finalmobile.Model.TvShowModel;
 public class DetailActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private ImageView ivBack, ivPoster, ivBackground, ivFav;
-    private TextView tvTittle, tvVote, tvOverview, tvRilis;
+    private TextView tvTitle, tvVote, tvOverview, tvRelease;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class DetailActivity extends AppCompatActivity {
         ivPoster = findViewById(R.id.ivPoster);
         ivFav = findViewById(R.id.btnFav);
         ivBack = findViewById(R.id.btnBack);
-        tvTittle = findViewById(R.id.tvTittle);
-        tvRilis = findViewById(R.id.tvRilis);
+        tvTitle = findViewById(R.id.tvTittle);
+        tvRelease = findViewById(R.id.tvRilis);
         tvVote = findViewById(R.id.tvVote);
         tvOverview = findViewById(R.id.tvOverview);
         databaseHelper = new DatabaseHelper(this);
@@ -42,31 +42,37 @@ public class DetailActivity extends AppCompatActivity {
         } else if (intent.getParcelableExtra("TvShow") != null) {
             TvShowModel tvShow = intent.getParcelableExtra("TvShow");
             showTvShowDetails(tvShow);
-        } else if (intent.getParcelableExtra("favorite") != null) {
+        } else {
             FavoriteModel favorite = intent.getParcelableExtra("favorite");
             showFavoriteDetails(favorite);
         }
 
-        ivBack.setOnClickListener(v -> onBackPressed());
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void showMovieDetails(MovieModel movie) {
-        tvTittle.setText(movie.getOriginal_title());
-        tvRilis.setText(movie.getRelease_date());
+        tvTitle.setText(movie.getOriginal_title());
+        tvRelease.setText(movie.getRelease_date());
         tvVote.setText(movie.getVote_average());
         tvOverview.setText(movie.getOverview());
+
         Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w500" + movie.getPoster_path())
                 .into(ivPoster);
         Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500" + movie.getBackdrop_path())
+                .load("https://image.tmdb.org/t/p/w500" + movie.getBackdropUrl())
                 .into(ivBackground);
 
         ivFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!databaseHelper.checkMovie(movie.getOriginal_title())) {
-                    addMovieToFavorite(movie.getId(), movie.getOriginal_title(), movie.getPoster_path(), movie.getBackdrop_path(), movie.getRelease_date(), movie.getVote_average(), movie.getOverview());
+                    addMovieToFavorite(movie.getId(), movie.getOriginal_title(), movie.getPoster_path(), movie.getBackdropUrl(), movie.getRelease_date(), movie.getVote_average(), movie.getOverview());
                 } else {
                     deleteMovieFromFavorite(movie.getOriginal_title());
                 }
@@ -75,10 +81,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void showTvShowDetails(TvShowModel tvShow) {
-        tvTittle.setText(tvShow.getOriginal_name());
-        tvRilis.setText(tvShow.getFirst_air_date());
+        tvTitle.setText(tvShow.getOriginal_name());
+        tvRelease.setText(tvShow.getFirst_air_date());
         tvVote.setText(tvShow.getVote_average());
         tvOverview.setText(tvShow.getOverview());
+
         Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w500" + tvShow.getPoster_path())
                 .into(ivPoster);
@@ -99,21 +106,25 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void showFavoriteDetails(FavoriteModel favorite) {
-        tvTittle.setText(favorite.getOriginal_title());
-        tvRilis.setText(favorite.getRelease_date());
+        tvTitle.setText(favorite.getRelease_date());
+        tvRelease.setText(favorite.getPoster_path());
         tvVote.setText(favorite.getVote_average());
-        tvOverview.setText(favorite.getOverview());
+        tvOverview.setText(favorite.getBackdropUrl());
         Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500" + favorite.getPoster_path())
+                .load("https://image.tmdb.org/t/p/w500" + favorite.getOriginal_title())
                 .into(ivPoster);
         Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w500" + favorite.getBackdropUrl())
+                .load("https://image.tmdb.org/t/p/w500" + favorite.getOverview())
                 .into(ivBackground);
 
         ivFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMovieFromFavorite(favorite.getOriginal_title());
+                if (!databaseHelper.checkMovie(favorite.getOriginal_title())) {
+                    addMovieToFavorite(favorite.getId(), favorite.getOriginal_title(), favorite.getPoster_path(), favorite.getBackdropUrl(), favorite.getRelease_date(), favorite.getVote_average(), favorite.getOverview());
+                } else {
+                    deleteMovieFromFavorite(favorite.getOriginal_title());
+                }
             }
         });
     }

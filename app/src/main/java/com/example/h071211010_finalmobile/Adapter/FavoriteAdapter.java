@@ -59,13 +59,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         }
 
         public void setData(FavoriteModel favorite, Context context) {
-            String title = favorite.getOriginal_title();
-            String rilis = favorite.getRelease_date();
-            String poster = favorite.getPoster_path();
+            String title = favorite.getRelease_date();
+            String rilis = favorite.getPoster_path();
+            String poster = favorite.getOriginal_title();
             tvTittle.setText(title);
             tvRilis.setText(rilis);
             Glide.with(context)
-                    .load(poster)
+                    .load("https://image.tmdb.org/t/p/w500" + poster)
                     .into(ivFilm);
 
             this.itemView.setOnClickListener(new View.OnClickListener() {

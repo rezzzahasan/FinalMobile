@@ -5,9 +5,14 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TvShowModel implements Parcelable {
     @SerializedName("id")
     private int id;
+    @SerializedName("genre_ids")
+    private final List<Integer> genreIds;
     @SerializedName("backdrop_path")
     private String backdrop_path;
     @SerializedName("original_name")
@@ -45,9 +50,6 @@ public class TvShowModel implements Parcelable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getBackdrop_path() {
         return backdrop_path;
@@ -99,6 +101,8 @@ public class TvShowModel implements Parcelable {
 
     protected TvShowModel(Parcel in) {
         id = in.readInt();
+        genreIds = new ArrayList<>();
+        in.readList(genreIds, Integer.class.getClassLoader());
         backdrop_path = in.readString();
         original_name = in.readString();
         overview = in.readString();
@@ -110,6 +114,7 @@ public class TvShowModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
+        dest.writeList(genreIds);
         dest.writeString(backdrop_path);
         dest.writeString(original_name);
         dest.writeString(overview);

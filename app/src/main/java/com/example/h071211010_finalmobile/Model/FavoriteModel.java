@@ -6,16 +6,16 @@ import android.os.Parcelable;
 public class FavoriteModel implements Parcelable {
     private final int id;
     private final String backdropUrl;
-    private final String original_title;
+    private final String title;
     private final String overview;
     private final String poster_path;
     private final String release_date;
     private final String vote_average;
 
 
-    public FavoriteModel(int id, String original_title, String overview, String poster_path, String release_date, String vote_average, String backdropUrl) {
+    public FavoriteModel(int id, String title, String overview, String poster_path, String release_date, String vote_average, String backdropUrl) {
         this.id = id;
-        this.original_title = original_title;
+        this.title = title;
         this.overview = overview;
         this.poster_path = poster_path;
         this.release_date = release_date;
@@ -26,7 +26,7 @@ public class FavoriteModel implements Parcelable {
     protected FavoriteModel(Parcel in) {
         id = in.readInt();
         backdropUrl = in.readString();
-        original_title = in.readString();
+        title = in.readString();
         overview = in.readString();
         poster_path = in.readString();
         release_date = in.readString();
@@ -37,7 +37,7 @@ public class FavoriteModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(backdropUrl);
-        dest.writeString(original_title);
+        dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(poster_path);
         dest.writeString(release_date);
@@ -67,7 +67,7 @@ public class FavoriteModel implements Parcelable {
         return backdropUrl;
     }
     public String getOriginal_title() {
-        return original_title;
+        return title;
     }
     public String getOverview() {
         return overview;

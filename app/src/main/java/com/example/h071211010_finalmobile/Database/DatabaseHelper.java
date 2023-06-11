@@ -30,43 +30,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long insertMovie(MovieModel movieModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_ID, movieModel.getId());
         contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_TITLE, movieModel.getOriginal_title());
         contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_POSTER, movieModel.getPoster_path());
         contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_OVERVIEW, movieModel.getOverview());
         contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_RELEASE_DATE, movieModel.getRelease_date());
         contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_VOTE_AVERAGE, movieModel.getVote_average());
-        contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_BACKDROP_URL, movieModel.getBackdrop_path());
+        contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_BACKDROP_URL, movieModel.getBackdropUrl());
+        contentValues.put(DatabaseContract.DatabaseEntry.COLUMN_GENRE_IDS, movieModel.getId());
 
-        long id = db.insert(DatabaseContract.DatabaseEntry.TABLE_NAME, null, contentValues);
-        return id;
+        return db.insert(DatabaseContract.DatabaseEntry.TABLE_NAME, null, contentValues);
+
     }
 
     public Cursor getAllMovies() {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] projection = {
-                DatabaseContract.DatabaseEntry.COLUMN_ID,
+                DatabaseContract.DatabaseEntry._ID,
                 DatabaseContract.DatabaseEntry.COLUMN_TITLE,
                 DatabaseContract.DatabaseEntry.COLUMN_POSTER,
                 DatabaseContract.DatabaseEntry.COLUMN_OVERVIEW,
                 DatabaseContract.DatabaseEntry.COLUMN_RELEASE_DATE,
                 DatabaseContract.DatabaseEntry.COLUMN_VOTE_AVERAGE,
-                DatabaseContract.DatabaseEntry.COLUMN_BACKDROP_URL
+                DatabaseContract.DatabaseEntry.COLUMN_BACKDROP_URL,
+                DatabaseContract.DatabaseEntry.COLUMN_GENRE_IDS
         };
         return db.query(DatabaseContract.DatabaseEntry.TABLE_NAME, projection, null, null, null, null, null);
     }
     public int deleteMovie(String nama) {
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = DatabaseContract.DatabaseEntry.COLUMN_TITLE + " = ?";
+
         return db.delete(DatabaseContract.DatabaseEntry.TABLE_NAME, selection, new String[]{nama});
     }
     public boolean checkMovie(String title) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         try {
-            String query = "SELECT * FROM " + DatabaseContract.DatabaseEntry.TABLE_NAME + " WHERE " + DatabaseContract.DatabaseEntry.COLUMN_TITLE + " = '" + title + "'";
-            cursor = db.rawQuery(query, null);
-            if (cursor.getCount() > 0) {
+            String query = "SELECT * FROM " + DatabaseContract.DatabaseEntry.TABLE_NAME + " WHERE " + DatabaseContract.DatabaseEntry.COLUMN_TITLE + " = ?";
+            String[] selectionArgs = {String.valueOf(title)};
+            cursor = db.rawQuery(query, selectionArgs);
+            if (cursor != null && cursor.getCount() > 0) {
                 return true;
             }
         } finally {

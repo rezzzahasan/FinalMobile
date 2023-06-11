@@ -25,7 +25,6 @@ public class FavoriteFragment extends Fragment {
     RecyclerView rvFavorite;
     ProgressBar progressBar;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,9 +72,7 @@ public class FavoriteFragment extends Fragment {
             } while (cursor.moveToNext());
 
         }
-        if (cursor != null) {
-            cursor.close();
-        }
+        cursor.close(); // Close the cursor after using it
         return favoriteList;
     }
 
